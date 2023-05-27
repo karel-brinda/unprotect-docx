@@ -48,7 +48,7 @@ cp "$x" "$d/a.docx"
 	msg "Step 3: modifying the content of\n        \"$d/$f\""
 
 	cat "$f" \
-		| perl -pe 's/<w:documentProtection.*\/>//g' \
+		| perl -pe 's/<w:documentProtection.*?\/>//g' \
 		> "$f.tmp"
 	mv "$f.tmp" "$f"
 
