@@ -44,10 +44,16 @@ cp "$x" "$d/a.docx"
 	msg "Step 2: unzipping the content of \"$x\" into\n        \"$d/a\""
 	unzip -d a a.docx
 
-	msg "Step 3: modifying the content"
+	f="a/word/settings.xml"
+	msg "Step 3: modifying the content of\n        \"$d/$f\""
+
+	cat "$f" \
+		| perl -pe 's/<w:documentProtection.*\/>//g' \
+		> "$f.tmp"
+	mv "$f.tmp" "$f"
 
 
-	msg "Step 4: re-zipping the content of\n         \"$d/a\"\n        into \"$y\""
+	msg "Step 4: re-zipping the content of\n        \"$d/a\"\n        into \"$y\""
 	(
 		cd a
 		zip ../b.docx $(find .)
